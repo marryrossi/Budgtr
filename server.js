@@ -15,10 +15,27 @@ app.get('/', (req, res) => {
 
 // Index
 app.get('/budgets', (req, res) => {
-    res.render('index.ejs', {
+    res.render('budget_index.ejs', {
         budget, bankAccount,
     });
-  });
+});
+
+// New
+app.get("/budgets/new", (req, res) => {
+    res.render("new.ejs");
+});
+
+// Show
+app.get("/budgets/:index", (req, res) => {
+    res.render("budget_show.ejs", {
+        budget : budget[req.params.index],
+    });
+});
+
+app.post('/budgets', (req, res) => {
+    budget.push(req.body);
+    res.redirect('/budgets');
+});
 
 // Listening
 app.listen(port, () => console.log(`Express is listening on Port: ${port}`))
